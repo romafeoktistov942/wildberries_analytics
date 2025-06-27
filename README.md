@@ -1,91 +1,58 @@
 # Wildberries Analytics
 
-**Wildberries Analytics** — сервис для сбора, хранения и визуализации аналитики по товарам с платформы Wildberries.
+Данный проект представляет собой простой сервис аналитики товаров с сайта Wildberries. Он включает в себя backend на Django с REST API и frontend с визуализацией данных.
 
 ## Возможности
 
-- Парсинг товаров с Wildberries по категории
-- Сохранение информации о товарах в базу данных Django
-- REST API с фильтрацией по цене, рейтингу и количеству отзывов
-- Веб-интерфейс с таблицей товаров и графиками (распределение цен, скидки vs рейтинг)
-
----
+- Парсинг данных с Wildberries по поисковому запросу.
+- Сохранение информации о товарах в базе данных.
+- API-эндпоинт `/api/products/` с фильтрацией по цене, рейтингу и количеству отзывов.
+- Веб-интерфейс с таблицей товаров и графиками:
+  - Гистограмма цен
+  - Линейный график зависимости скидки от рейтинга
+- Интерфейс с динамическими фильтрами и сортировкой данных.
 
 ## Установка и запуск
 
-### 1. Клонирование и подготовка окружения
+1. Клонируйте репозиторий:
+   ```bash
+   git clone <your-repo-url>
+   cd wildberries_analytics
+   ```
 
-```bash
-git clone https://github.com/your-username/wildberries_analytics.git
-cd wildberries_analytics
+2. Создайте и активируйте виртуальное окружение:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Для Windows: .venv\Scripts\activate
+   ```
 
-python -m venv .venv
-source .venv/bin/activate  # для macOS/Linux
-# .venv\Scripts\activate   # для Windows
+3. Установите зависимости:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-pip install -r requirements.txt
-```
+4. Примените миграции:
+   ```bash
+   python manage.py migrate
+   ```
 
-### 2. Миграции базы данных
+5. Запустите сервер:
+   ```bash
+   python manage.py runserver
+   ```
 
-```bash
-python manage.py migrate
-```
+6. Для запуска парсера выполните:
+   ```bash
+   python manage.py parse_wb "ваш_поисковый_запрос"
+   ```
 
-### 3. Парсинг товаров
+7. Перейдите в браузере:
+   ```
+   http://127.0.0.1:8000/
+   ```
 
-Для наполнения базы товаров используйте парсер по категории (пример для ноутбуков):
+## Стек технологий
 
-```bash
-python manage.py shell
-```
-```python
-from analytics.parser import parse_products_by_category
-parse_products_by_category()
-exit()
-```
-
-### 4. Запуск сервера
-
-```bash
-python manage.py runserver
-```
-
-Откройте [http://127.0.0.1:8000/](http://127.0.0.1:8000/) в браузере.
-
----
-
-## Структура проекта
-
-```
-wildberries_analytics/
-├── manage.py
-├── requirements.txt
-├── analytics/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── parser.py
-│   ├── templates/
-│   │   └── analytics/
-│   │       └── dashboard.html
-│   ├── static/
-│   │   └── analytics/
-│   │       └── charts.js
-│   └── management/
-│       └── commands/
-│           └── parse_wb.py
-├── wildberries_analytics/
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
-```
-
----
-
-## Примечания
-
-- Для корректной работы парсера используйте актуальные категории Wildberries.
-- Если API Wildberries изменится, потребуется обновить парсер.
-
+- Python, Django, Django REST Framework
+- JavaScript, Chart.js
+- SQLite (по умолчанию, можно заменить на PostgreSQL)
