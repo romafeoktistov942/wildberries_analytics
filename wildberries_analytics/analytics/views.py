@@ -7,7 +7,6 @@ def dashboard(request):
     return render(request, "analytics/dashboard.html")
 
 
-# Пример API-эндпоинта для списка продуктов с фильтрацией
 def products_list(request):
     products = Product.objects.all()
 
